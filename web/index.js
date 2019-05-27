@@ -2,12 +2,14 @@ import * as wasm from "term-image-wasm"
 import { getStream, nearest_base } from "./utils"
 
 import { Terminal } from "xterm"
-import * as fullscreen from "xterm/lib/addons/fullscreen/fullscreen"
 import * as fit from "xterm/lib/addons/fit/fit"
 import * as aspectratio from "aspectratio"
 
+import "xterm/dist/xterm.css"
+import "xterm/dist/xterm.js"
+import "./index.css"
+
 Terminal.applyAddon(fit)
-Terminal.applyAddon(fullscreen)
 let term = new Terminal()
 window.term = term
 term.open(document.getElementById("terminal"))
@@ -80,9 +82,6 @@ const setupHooks = () => {
     document.getElementById("extended").onclick = function() {
         options.extended = this.checked === true
     }
-    // window.onresize = () => {
-    //     term.fit()
-    // }
 }
 
 const main = async () => {
