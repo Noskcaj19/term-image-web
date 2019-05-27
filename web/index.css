@@ -4,7 +4,7 @@ html, body {
 }
 
 #video, #canvas {
-    /*display: none;*/
+    display: none;
 }
 
 
@@ -24,7 +24,6 @@ video, canvas {
     flex-grow: 1;
     flex-shrink: 1;
     flex-basis: auto;
-    border: 2px solid black;
 }
 
 #controls {
