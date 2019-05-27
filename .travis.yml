@@ -5,6 +5,7 @@ cache:
 - directories:
     - /home/travis/.cargo/bin
 script:
+- cargo install wasm-bindgen-cli
 - curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
 - wasm-pack build
 - cd pkg
