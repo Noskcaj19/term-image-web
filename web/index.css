@@ -1,0 +1,32 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+#video, #canvas {
+    /*display: none;*/
+}
+
+
+video, canvas {
+    transform: rotateY(180deg);
+    -webkit-transform:rotateY(180deg); /* Safari and Chrome */
+    -moz-transform:rotateY(180deg); /* Firefox */
+}
+
+#view {
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+}
+
+#terminal-container {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: auto;
+    border: 2px solid black;
+}
+
+#controls {
+    flex: 0 1 auto;
+}

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Term-Image</title>
+        <link rel="stylesheet" href="node_modules/xterm/dist/xterm.css" />
+        <link
+            rel="stylesheet"
+            href="node_modules/xterm/dist/addons/fullscreen/fullscreen.css"
+        />
+        <link rel="stylesheet" href="index.css" />
+        <script src="node_modules/xterm/dist/xterm.js"></script>
+    </head>
+    <body>
+        <div id="view">
+            <div id="controls">
+                <label>FPS:</label><input id="fps" type="text" />
+                <label>Extended Characters:</label
+                ><input id="extended" type="checkbox" /> <label>Blend:</label
+                ><input id="blend" type="checkbox" /> <label>ANSI Color:</label
+                ><input id="ansi" type="checkbox" />
+            </div>
+            <div id="terminal-container">
+                <div id="terminal"></div>
+            </div>
+        </div>
+
+        <video autoplay height="720" id="video" width="1280"></video>
+
+        <canvas id="canvas"></canvas>
+
+        <script src="./bootstrap.js"></script>
+    </body>
+</html>

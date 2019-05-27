@@ -1,0 +1,21 @@
+{
+  "name": "term-image",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Noskcaj19",
+  "license": "MIT",
+  "scripts": {
+    "build": "webpack --config webpack.config.js",
+    "start": "webpack-dev-server"
+  },
+  "devDependencies": {
+    "copy-webpack-plugin": "^5.0.3",
+    "webpack": "^4.32.2",
+    "webpack-cli": "^3.3.2",
+    "webpack-dev-server": "^3.4.1"
+  },
+  "dependencies": {
+    "aspectratio": "^2.2.2",
+    "xterm": "^3.13.2"
+  }
+}
