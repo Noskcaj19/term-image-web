@@ -1,0 +1,25 @@
+language: rust
+cache:
+- cargo
+- yarn
+- directories:
+    - /home/travis/.cargo/bin
+script:
+- curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+- wasm-pack build
+- cd pkg
+- yarn link
+- cd ../web
+- yarn link "term-image-wasm"
+- yarn install
+- yarn build
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: "$GH_TOKEN"
+  local-dir: web/dist/
+  on:
+    branch: master
+env:
+  global:
+  - secure: A1O2YrsuhbxmIgXjpzNtC+Q+4IHO0s8tVIYI6Zxkb7wUqmHL2T6Ho09DaTqlKBCUsiet4xK8CBlI414Kh+UMHbLhYoWmjuz0JGefP1on2aYtFhlVXZmgE25rYCJpin0KUG7k3nZjhdOrwlc3riQVFmGPVHNLoNB/6CF6j69Xr5JQTE7NSFmM3wG5OtMRjXTEjm52qaTwKwP0qIuqrDe9kcE25QY4T0aMXNUp5TccaVx2Iti2UglYdLtjDrLqS+P4Wx7b+1VrPDrUpJaSwlHR7dB3ApmA6mayd3Fj63Sjk6P8gkwUrfmZG83vjDyRaPNLz6S/TPvtSQD/rYOUtST0za2cMb7Gpftef1Hd+1jfnveZFQqPf8jyk7TFPGXN/YEM9IS5jo1ru2cuQ0peIxVQIZe8hW4Q0gI+Oc9hCeVu7++ltL/WGKorH8XpNM3dRzhnClhALBluijNUgKlj+KwiYOHQaGr+XUvRvpiIOVe18kWTQZumO9cEjq8l11GJuAwE8WsAHon1RNluHbY9pY1LLHTK/b1ZWuTUW3bG3lT8Y88IoWOSAU+Cn7oH0vOYRu9g7GtAXRLSClTta0LKDlA0OaPsjlqTVz8MnFv/mL/ETt/KZwfgb5218t9oHgx4UVedSX6Yk+9R7RA4eqKvO9gDpzMrxWGNlCAzpTb+qIIP7VE=
