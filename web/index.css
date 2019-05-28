@@ -25,6 +25,10 @@ video, canvas {
     flex-basis: auto;
 }
 
+#terminal {
+    height: 100%;
+}
+
 #controls {
     flex: 0 1 auto;
 }
