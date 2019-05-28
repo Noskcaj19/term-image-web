@@ -7,23 +7,37 @@
     <body>
         <div id="view">
             <div id="controls">
-                    <div id="row-one">
-                        <p id="display-mode-label">Display mode:</p>
-                        <label for="block-mode">Block</label>
-                        <input name="mode" id="block-mode" type="radio" checked />
-                        <label for="braille-mode">Braille</label>
-                        <input name="mode" id="braille-mode" type="radio" />
-                    </div>
-                    <div id="row-two">
-                        <label for="fps">FPS:</label><input id="fps" type="text" />
-                        <label for="extended">Extended Characters:</label>
-                        <input id="extended" type="checkbox" />
+                <div id="row-one">
+                    <p class="radio-label">Display mode:</p>
+                    <input name="mode" id="block-mode" type="radio" checked />
+                    <label for="block-mode">Block</label>
+                    <input name="mode" id="braille-mode" type="radio" />
+                    <label for="braille-mode">Braille</label>
+                </div>
+                <div id="row-two">
+                    <label for="fps">FPS:</label>
+                    <input id="fps" type="text" value="15" />
 
-                        <label for="blend">Blend:</label>
-                        <input id="blend" type="checkbox" />
-                        <label for="ansi">ANSI Color:</label>
-                        <input id="ansi" type="checkbox" />
-                    </div>
+                    <label for="blend">Blend:</label>
+                    <input id="blend" type="checkbox" checked />
+                    <label for="ansi">ANSI Color:</label>
+                    <input id="ansi" type="checkbox" />
+
+                    <br />
+
+                    <p class="radio-label">Block Style:</p>
+                    <input
+                        name="block-style"
+                        id="extended"
+                        type="radio"
+                        checked
+                    />
+                    <label for="extended">Extended Characters:</label>
+                    <input name="block-style" id="slabs" type="radio" />
+                    <label for="slabs">Slabs</label>
+                    <input name="block-style" id="half" type="radio" />
+                    <label for="half">Halves</label>
+                </div>
             </div>
             <div id="terminal-container">
                 <div id="terminal"></div>

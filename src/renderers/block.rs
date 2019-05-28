@@ -128,7 +128,7 @@ fn process_block(
 
     // If best map is inverted, swap the colors
     if invert {
-        ::std::mem::swap(&mut fg_color, &mut bg_color);
+        std::mem::swap(&mut fg_color, &mut bg_color);
     }
 
     Block {
@@ -138,18 +138,14 @@ fn process_block(
     }
 }
 
-pub fn still(
-    mut img: image::DynamicImage,
-    ansi_color: bool,
-    blend: bool,
-    extended: bool,
-) -> String {
+pub fn still(mut img: image::DynamicImage, ansi_color: bool, blend: bool, style: u32) -> String {
     let mut out = String::new();
 
-    let bitmap = if extended {
-        BITMAPS_NO_SLOPES
-    } else {
-        BITMAPS_HALFS
+    let bitmap = match style {
+        1 => BITMAPS_NO_SLOPES,
+        2 => BITMAPS_BLOCKS,
+        3 => BITMAPS_HALFS,
+        _ => BITMAPS_NO_SLOPES,
     };
 
     for y in (0..img.height()).step_by(8) {

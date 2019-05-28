@@ -9,8 +9,6 @@ html, body {
 
 video, canvas {
     transform: rotateY(180deg);
-    -webkit-transform:rotateY(180deg); /* Safari and Chrome */
-    -moz-transform:rotateY(180deg); /* Firefox */
 }
 
 #view {
@@ -33,7 +31,7 @@ video, canvas {
     flex: 0 1 auto;
 }
 
-#display-mode-label {
+.radio-label {
     display: inline-block;
     margin: 0;
 }

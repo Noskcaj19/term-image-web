@@ -29,15 +29,10 @@ fn get_frame(width: u32, height: u32) -> image::RgbaImage {
 }
 
 #[wasm_bindgen]
-pub fn render_blocks(width: u32, height: u32, ansi: bool, blend: bool, extended: bool) -> String {
+pub fn render_blocks(width: u32, height: u32, ansi: bool, blend: bool, style: u32) -> String {
     let frame = get_frame(width, height);
 
-    renderers::block::still(
-        image::DynamicImage::ImageRgba8(frame),
-        ansi,
-        blend,
-        extended,
-    )
+    renderers::block::still(image::DynamicImage::ImageRgba8(frame), ansi, blend, style)
 }
 
 #[wasm_bindgen]

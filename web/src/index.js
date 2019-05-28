@@ -1,6 +1,6 @@
 import * as wasm from "term-image-wasm"
 import { getStream, nearest_base } from "./utils"
-import {DisplayMode} from "./types"
+import { DisplayMode, BlockStyle } from "./types"
 
 import { Terminal } from "xterm"
 import * as fit from "xterm/lib/addons/fit/fit"
@@ -23,7 +23,7 @@ class Options {
         this.fps = 15
         this.blend = true
         this.ansi = false
-        this.extended = true
+        this.blockStyle = BlockStyle.EXTENDED
         this.mode = DisplayMode.BLOCK
     }
 }
@@ -31,7 +31,10 @@ class Options {
 let options = new Options()
 
 const create_ratio = (cell_width, cell_height) => {
-    let [maxWidth, maxHeight] = [term.cols * cell_width, term.rows * cell_height]
+    let [maxWidth, maxHeight] = [
+        term.cols * cell_width,
+        term.rows * cell_height
+    ]
     return aspectratio.resize(1280, 720, maxWidth, maxHeight)
 }
 
@@ -72,18 +75,12 @@ const snapshotVidToCanvas = () => {
                     height,
                     options.ansi,
                     options.blend,
-                    options.extended
+                    options.blockStyle
                 )
             )
             break
         case DisplayMode.BRAILLE:
-            term.writeln(
-                wasm.render_braille(
-                    width,
-                    height,
-                    options.ansi,
-                )
-            )
+            term.writeln(wasm.render_braille(width, height, options.ansi))
             break
     }
 
@@ -108,9 +105,15 @@ const setupHooks = () => {
     document.getElementById("blend").onclick = function() {
         options.blend = this.checked === true
     }
-    document.getElementById("extended").checked = options.extended
+
     document.getElementById("extended").onclick = function() {
-        options.extended = this.checked === true
+        options.blockStyle = BlockStyle.EXTENDED
+    }
+    document.getElementById("slabs").onclick = function() {
+        options.blockStyle = BlockStyle.SLABS
+    }
+    document.getElementById("half").onclick = function() {
+        options.blockStyle = BlockStyle.HALVES
     }
 
     document.getElementById("block-mode").onclick = function() {
