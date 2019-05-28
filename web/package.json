@@ -1,7 +1,7 @@
 {
   "name": "term-image",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/index.js",
   "author": "Noskcaj19",
   "license": "MIT",
   "scripts": {
