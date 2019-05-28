@@ -7,11 +7,23 @@
     <body>
         <div id="view">
             <div id="controls">
-                <label>FPS:</label><input id="fps" type="text" />
-                <label>Extended Characters:</label
-                ><input id="extended" type="checkbox" /> <label>Blend:</label
-                ><input id="blend" type="checkbox" /> <label>ANSI Color:</label
-                ><input id="ansi" type="checkbox" />
+                    <div id="row-one">
+                        <p id="display-mode-label">Display mode:</p>
+                        <label for="block-mode">Block</label>
+                        <input name="mode" id="block-mode" type="radio" checked />
+                        <label for="braille-mode">Braille</label>
+                        <input name="mode" id="braille-mode" type="radio" />
+                    </div>
+                    <div id="row-two">
+                        <label for="fps">FPS:</label><input id="fps" type="text" />
+                        <label for="extended">Extended Characters:</label>
+                        <input id="extended" type="checkbox" />
+
+                        <label for="blend">Blend:</label>
+                        <input id="blend" type="checkbox" />
+                        <label for="ansi">ANSI Color:</label>
+                        <input id="ansi" type="checkbox" />
+                    </div>
             </div>
             <div id="terminal-container">
                 <div id="terminal"></div>

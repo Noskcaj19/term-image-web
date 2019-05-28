@@ -1,12 +1,11 @@
 use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
 
-mod block;
 mod draw_utils;
+mod renderers;
 mod termion;
 
-#[wasm_bindgen]
-pub fn render_blocks(width: u32, height: u32, ansi: bool, blend: bool, extended: bool) -> String {
+fn get_frame(width: u32, height: u32) -> image::RgbaImage {
     let document = web_sys::window().unwrap().document().unwrap();
     let canvas = document.get_element_by_id("canvas").unwrap();
     let canvas: web_sys::HtmlCanvasElement = canvas
@@ -26,12 +25,24 @@ pub fn render_blocks(width: u32, height: u32, ansi: bool, blend: bool, extended:
         .unwrap()
         .data();
 
-    let source = image::RgbaImage::from_raw(width, height, data.to_vec()).unwrap();
+    image::RgbaImage::from_raw(width, height, data.to_vec()).unwrap()
+}
 
-    block::still(
-        image::DynamicImage::ImageRgba8(source),
+#[wasm_bindgen]
+pub fn render_blocks(width: u32, height: u32, ansi: bool, blend: bool, extended: bool) -> String {
+    let frame = get_frame(width, height);
+
+    renderers::block::still(
+        image::DynamicImage::ImageRgba8(frame),
         ansi,
         blend,
         extended,
     )
+}
+
+#[wasm_bindgen]
+pub fn render_braille(width: u32, height: u32, ansi: bool) -> String {
+    let frame = get_frame(width, height);
+
+    renderers::braille::still(image::DynamicImage::ImageRgba8(frame), ansi)
 }

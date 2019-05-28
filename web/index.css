@@ -7,7 +7,6 @@ html, body {
     display: none;
 }
 
-
 video, canvas {
     transform: rotateY(180deg);
     -webkit-transform:rotateY(180deg); /* Safari and Chrome */
@@ -28,4 +27,9 @@ video, canvas {
 
 #controls {
     flex: 0 1 auto;
+}
+
+#display-mode-label {
+    display: inline-block;
+    margin: 0;
 }

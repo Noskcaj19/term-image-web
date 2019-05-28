@@ -3,31 +3,12 @@ use crate::termion::color::{self, Bg, Fg, Rgb};
 use image::{GenericImage, GenericImageView, Rgba};
 use std::fmt::Write;
 
-/// Convert full color rgb to 256 color
-pub fn rgb_to_ansi(color: color::Rgb) -> color::AnsiValue {
-    let r = (u16::from(color.0) * 5 / 255) as u8;
-    let g = (u16::from(color.1) * 5 / 255) as u8;
-    let b = (u16::from(color.2) * 5 / 255) as u8;
-    color::AnsiValue(16 + 36 * r + 6 * g + b)
-}
+use super::{rgb_to_ansi, DrawableCell};
 
 struct Block {
     ch: char,
     fg: Fg<Rgb>,
     bg: Bg<Rgb>,
-}
-
-trait DrawableCell {
-    fn print(&self, truecolor: bool, stdout: &mut impl Write) {
-        if truecolor {
-            self.print_truecolor(stdout);
-        } else {
-            self.print_ansi(stdout);
-        }
-    }
-
-    fn print_truecolor(&self, stdout: &mut impl Write);
-    fn print_ansi(&self, stdout: &mut impl Write);
 }
 
 impl DrawableCell for Block {
@@ -45,8 +26,6 @@ impl DrawableCell for Block {
         );
     }
 }
-
-pub struct UnicodeBlock;
 
 fn process_block(
     sub_img: &impl GenericImage<Pixel = Rgba<u8>>,
@@ -253,63 +232,4 @@ const BITMAPS_NO_SLOPES: &[(u32, char)] = &[
     (0x00000f00, '⎼'),
     (0x000000f0, '⎽'),
     (0x00066000, '▪'),
-];
-
-#[cfg_attr(feature = "cargo-clippy", allow(clippy::unreadable_literal))]
-const BITMAPS: &[(u32, char)] = &[
-    (0x00000000, ' '),
-    (0x0000000f, '▁'),
-    (0x000000ff, '▂'),
-    (0x00000fff, '▃'),
-    (0x0000ffff, '▄'),
-    (0x000fffff, '▅'),
-    (0x00ffffff, '▆'),
-    (0x0fffffff, '▇'),
-    (0xeeeeeeee, '▊'),
-    (0xcccccccc, '▌'),
-    (0x88888888, '▎'),
-    (0x0000cccc, '▖'),
-    (0x00003333, '▗'),
-    (0xcccc0000, '▘'),
-    (0xcccc3333, '▚'),
-    (0x33330000, '▝'),
-    (0x000ff000, '━'),
-    (0x66666666, '┃'),
-    (0x00077666, '┏'),
-    (0x000ee666, '┓'),
-    (0x66677000, '┗'),
-    (0x666ee000, '┛'),
-    (0x66677666, '┣'),
-    (0x666ee666, '┫'),
-    (0x000ff666, '┳'),
-    (0x666ff000, '┻'),
-    (0x666ff666, '╋'),
-    (0x000cc000, '╸'),
-    (0x00066000, '╹'),
-    (0x00033000, '╺'),
-    (0x00066000, '╻'),
-    (0x06600660, '╏'),
-    (0x000f0000, '─'),
-    (0x0000f000, '─'),
-    (0x44444444, '│'),
-    (0x22222222, '│'),
-    (0x000e0000, '╴'),
-    (0x0000e000, '╴'),
-    (0x44440000, '╵'),
-    (0x22220000, '╵'),
-    (0x00030000, '╶'),
-    (0x00003000, '╶'),
-    (0x00004444, '╵'),
-    (0x00002222, '╵'),
-    (0x44444444, '⎢'),
-    (0x22222222, '⎥'),
-    (0x0f000000, '⎺'),
-    (0x00f00000, '⎻'),
-    (0x00000f00, '⎼'),
-    (0x000000f0, '⎽'),
-    (0x00066000, '▪'),
-    (0x000137f0, '\u{25e2}'), // Triangles
-    (0x0008cef0, '\u{25e3}'),
-    (0x000fec80, '\u{25e4}'),
-    (0x000f7310, '\u{25e5}'),
 ];

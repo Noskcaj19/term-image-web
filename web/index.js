@@ -1,5 +1,6 @@
 import * as wasm from "term-image-wasm"
 import { getStream, nearest_base } from "./utils"
+import {DisplayMode} from "./types"
 
 import { Terminal } from "xterm"
 import * as fit from "xterm/lib/addons/fit/fit"
@@ -23,21 +24,36 @@ class Options {
         this.blend = true
         this.ansi = false
         this.extended = true
+        this.mode = DisplayMode.BLOCK
     }
 }
 
-var options = new Options()
+let options = new Options()
+
+const create_ratio = (cell_width, cell_height) => {
+    let [maxWidth, maxHeight] = [term.cols * cell_width, term.rows * cell_height]
+    return aspectratio.resize(1280, 720, maxWidth, maxHeight)
+}
 
 const snapshotVidToCanvas = () => {
     const vid = document.getElementById("video")
     const canvas = document.getElementById("canvas")
     const ctx = canvas.getContext("2d")
 
-    var [maxWidth, maxHeight] = [term.cols * 4, term.rows * 8]
-    var [width, height] = aspectratio.resize(1280, 720, maxWidth, maxHeight)
+    let cell_width, cell_height
+    switch (options.mode) {
+        case DisplayMode.BLOCK:
+            [cell_width, cell_height] = [4, 8]
+            break
+        case DisplayMode.BRAILLE:
+            [cell_width, cell_height] = [2, 4]
+            break
+    }
 
-    width = nearest_base(width, 4)
-    height = nearest_base(height, 8)
+    let [width, height] = create_ratio(cell_width, cell_height)
+
+    width = nearest_base(width, cell_width)
+    height = nearest_base(height, cell_height)
 
     canvas.width = width
     canvas.height = height
@@ -47,15 +63,29 @@ const snapshotVidToCanvas = () => {
     ctx.drawImage(vid, 0, 0, width, height)
 
     term.writeln("\r".repeat(25))
-    term.writeln(
-        wasm.render_blocks(
-            width,
-            height,
-            options.ansi,
-            options.blend,
-            options.extended
-        )
-    )
+
+    switch (options.mode) {
+        case DisplayMode.BLOCK:
+            term.writeln(
+                wasm.render_blocks(
+                    width,
+                    height,
+                    options.ansi,
+                    options.blend,
+                    options.extended
+                )
+            )
+            break
+        case DisplayMode.BRAILLE:
+            term.writeln(
+                wasm.render_braille(
+                    width,
+                    height,
+                    options.ansi,
+                )
+            )
+            break
+    }
 
     setTimeout(function() {
         window.requestAnimationFrame(snapshotVidToCanvas)
@@ -81,6 +111,13 @@ const setupHooks = () => {
     document.getElementById("extended").checked = options.extended
     document.getElementById("extended").onclick = function() {
         options.extended = this.checked === true
+    }
+
+    document.getElementById("block-mode").onclick = function() {
+        options.mode = DisplayMode.BLOCK
+    }
+    document.getElementById("braille-mode").onclick = function() {
+        options.mode = DisplayMode.BRAILLE
     }
 }
 
