@@ -1,0 +1,38 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+#video, #canvas {
+    display: none;
+}
+
+video, canvas {
+    transform: rotateY(180deg);
+}
+
+#view {
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+}
+
+#terminal-container {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: auto;
+}
+
+#terminal {
+    height: 100%;
+}
+
+#controls {
+    flex: 0 1 auto;
+}
+
+.radio-label {
+    display: inline-block;
+    margin: 0;
+}
+
